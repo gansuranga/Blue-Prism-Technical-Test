@@ -42,43 +42,37 @@ namespace Technical_Test_Application
         static void DictionaryLoad()
         {
             bool dictionaryLoaded = false;
-            bool dictionaryValid = false;
 
-            // Ask user for directory
+            // Ask user for the file name of the dictionary they want to use.
             while (dictionaryLoaded == false)
             {
-
-
                 Console.WriteLine("Please type the name of the file you wish to use or type quit or exit to quit the application.");
                 Console.WriteLine("Note: The name of the included dictionary is called words-english.txt");
                 string currentPath = System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString();
                 string dictionariesPath = Path.GetFullPath(Path.Combine(currentPath, @"..\..\Dictionaries"));
                 //Console.WriteLine(dictionariesPath);
                 string fileName = Console.ReadLine();
+                // Save user input as upper case. Used to check if the user wants to exit the application...
+                // ...by typing "exit" or "quit".
                 string exitCheck = fileName.ToUpper();
                 ExitCheck(exitCheck);
 
                 string filePath = Path.Combine(dictionariesPath, fileName);
-                Console.WriteLine(filePath);
-                // TODO: DICTIONARY VARIABLE
-                // Save user input as upper case. Used to check if the user wants to exit the application...
-                // ...by typing "exit" or "quit".
-
+                //Console.WriteLine(filePath);
+                
 
                 if (File.Exists(filePath))
                 {
-
+                    // TODO: TRY/CATCH LOAD DICTIONARY
+                    // TODO: IF DICTIONARY IS LOADED: CONTINUE. ELSE GIVE ERROR MESSAGE
                     dictionaryLoaded = true;
                     Console.WriteLine("Dictionary loaded!");
                 }
                 else
                 {
-                    Console.WriteLine("\nThere was a problem loading the dictionary: {0}", fileName);
-                    Console.WriteLine("Please ensure the file is in the following directory:\n{0}", dictionariesPath);
-                    Console.WriteLine("");
+                    Console.WriteLine("\nThe following file does not exist: {0}", fileName);
+                    Console.WriteLine("Please ensure the file is in the following directory:\n{0}\n", dictionariesPath);
                 }
-
-
 
             }
         }
@@ -86,8 +80,7 @@ namespace Technical_Test_Application
         // Retrieves the two words to check from the user
         static (string, string) WordsInput()
         {
-            // Program main loop
-            // Asks for user input. If the user types quit or exit, application exits
+            // Asks for user for two words. These are used to search the dictionary
             Console.WriteLine("Please type the first word to check from the dictionary");
 
 
@@ -109,11 +102,7 @@ namespace Technical_Test_Application
 
             string secondWord = userInput;
 
-
-
             return (firstWord, secondWord);
-
-
         }
 
         // Checks that the word exists in the dictionary
