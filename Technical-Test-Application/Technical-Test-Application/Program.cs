@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+
 
 namespace Technical_Test_Application
 {
@@ -40,18 +42,30 @@ namespace Technical_Test_Application
         static void DictionaryLoad()
         {
             bool dictionaryLoaded = false;
-            bool dictionaryPathValid = false;
+            bool dictionaryValid = false;
 
             // Ask user for directory
             while (dictionaryLoaded == false)
             {
 
 
-                Console.WriteLine("Please type the full directory path of the dictionary");
-                string dictionaryPath = Console.ReadLine();
-                // TODO: DICTIONARY VARIABLE
+                Console.WriteLine("Please type the name of the file you wish to use or type quit or exit to quit the application.");
+                Console.WriteLine("Note: The name of the included dictionary is called words-english.txt");
+                string currentPath = System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString();
+                string dictionariesPath = Path.GetFullPath(Path.Combine(currentPath, @"..\..\Dictionaries"));
+                //Console.WriteLine(dictionariesPath);
+                string fileName = Console.ReadLine();
+                string exitCheck = fileName.ToUpper();
+                ExitCheck(exitCheck);
 
-                if(dictionaryPathValid == true)
+                string filePath = Path.Combine(dictionariesPath, fileName);
+                Console.WriteLine(filePath);
+                // TODO: DICTIONARY VARIABLE
+                // Save user input as upper case. Used to check if the user wants to exit the application...
+                // ...by typing "exit" or "quit".
+
+
+                if (File.Exists(filePath))
                 {
 
                     dictionaryLoaded = true;
@@ -59,7 +73,9 @@ namespace Technical_Test_Application
                 }
                 else
                 {
-                    Console.WriteLine("There was a problem loading the dictionary...");
+                    Console.WriteLine("\nThere was a problem loading the dictionary: {0}", fileName);
+                    Console.WriteLine("Please ensure the file is in the following directory:\n{0}", dictionariesPath);
+                    Console.WriteLine("");
                 }
 
 
