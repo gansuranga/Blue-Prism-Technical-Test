@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-
 namespace Technical_Test_Application
 {
     class Program
@@ -28,14 +27,15 @@ namespace Technical_Test_Application
                 Console.WriteLine("Your second word is: {0}", secondWord);
 
                 // TODO: CHECK EACH WORD EXISTS IN THE DICTIONARY
-
                 // Check the words exist in the dictionary
                 CheckDictionary(firstWord);
                 CheckDictionary(secondWord);
 
                 // TODO: GENERATE LIST
+                GenerateList();
 
                 // TODO: WRITE FILE TO OUTPUT
+                OutputFile();
             }
         }
 
@@ -91,7 +91,7 @@ namespace Technical_Test_Application
             ExitCheck(exitCheck);
 
             string firstWord = userInput;
-
+ 
             // Asks for user input (second word)
             Console.WriteLine("Please type the second word to check from the dictionary");
             userInput = Console.ReadLine();
@@ -100,6 +100,8 @@ namespace Technical_Test_Application
             ExitCheck(exitCheck);
 
             string secondWord = userInput;
+
+            // TODO: CHECK THAT THE ENTERED WORDS ARE 4 CHARACTERS LONG - NEW METHOD
 
             return (firstWord, secondWord);
         }
@@ -115,7 +117,7 @@ namespace Technical_Test_Application
             // TODO: Generate list using the two words given by the user
         }
 
-        static void OutputFile(string word)
+        static void OutputFile()
         {
             // TODO: SET FILE DIRECTORY
             // TODO: ASK USER FOR FILE NAME
