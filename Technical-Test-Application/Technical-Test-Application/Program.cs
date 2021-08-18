@@ -27,8 +27,9 @@ namespace Technical_Test_Application
                 Console.WriteLine("Your first word is: {0}", firstWord);
                 Console.WriteLine("Your second word is: {0}", secondWord);
 
-                // Check the words exist in the dictionary
                 // TODO: CHECK EACH WORD EXISTS IN THE DICTIONARY
+
+                // Check the words exist in the dictionary
                 CheckDictionary(firstWord);
                 CheckDictionary(secondWord);
 
@@ -60,7 +61,6 @@ namespace Technical_Test_Application
                 string filePath = Path.Combine(dictionariesPath, fileName);
                 //Console.WriteLine(filePath);
                 
-
                 if (File.Exists(filePath))
                 {
                     // TODO: TRY/CATCH LOAD DICTIONARY
@@ -73,18 +73,16 @@ namespace Technical_Test_Application
                     Console.WriteLine("\nThe following file does not exist: {0}", fileName);
                     Console.WriteLine("Please ensure the file is in the following directory:\n{0}\n", dictionariesPath);
                 }
-
             }
         }
 
-        // Retrieves the two words to check from the user
+        // Asks user to input two words and returns them.
         static (string, string) WordsInput()
         {
             // Asks for user for two words. These are used to search the dictionary
             Console.WriteLine("Please type the first word to check from the dictionary");
 
-
-            // Read user input
+            // Read user input (first word)
             string userInput = Console.ReadLine();
 
             // Save user input as upper case. Used to check if the user wants to exit the application...
@@ -94,6 +92,7 @@ namespace Technical_Test_Application
 
             string firstWord = userInput;
 
+            // Asks for user input (second word)
             Console.WriteLine("Please type the second word to check from the dictionary");
             userInput = Console.ReadLine();
 
@@ -108,7 +107,19 @@ namespace Technical_Test_Application
         // Checks that the word exists in the dictionary
         static void CheckDictionary(string word)
         {
-            //TODO: CHECK DICTIONARY FOR WORDS
+            // TODO: CHECK DICTIONARY FOR WORDS
+        }
+
+        static void GenerateList()
+        {
+            // TODO: Generate list using the two words given by the user
+        }
+
+        static void OutputFile(string word)
+        {
+            // TODO: SET FILE DIRECTORY
+            // TODO: ASK USER FOR FILE NAME
+            // TODO: WRITE FILE TO DIRECTORY
         }
 
         // Checks if the user has typed "exit" or "quit"
@@ -118,7 +129,6 @@ namespace Technical_Test_Application
             {
                 Environment.Exit(0);
             }
-
         }
     }
 }
