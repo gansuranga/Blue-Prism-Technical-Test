@@ -24,3 +24,7 @@ Having thought about the process the function should perform to create the lists
 
 ## 23/8/2021
 Continued working on loading the dictionary and checking each word exists in the dictionary. Also added a check to ensure each word entered is four letters long, and if either word isn't the program will ask again.
+
+## 24/8/2021
+Continued working on the main algorithm for the application. Attempted to create a bredth first search using for loops, but it hasn't functioned as intended. I've also run short on time but the only thing missing at this point is to make the program perform a correct bredth first search. 
+This would most likely be done by implementing a que instead of setting the word to use at given points in the program.

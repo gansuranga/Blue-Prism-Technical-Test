@@ -24,9 +24,11 @@ namespace Technical_Test_Application
             {
                 bool wordOneInDictionary = false;
                 bool wordTwoInDictionary = false;
+                string[,] wordLists = new string[,] { };
 
                 // Get the two words from the user.
                 (string firstWord, string secondWord) = WordsInput();
+
 
                 Console.WriteLine("Your first word is: {0}", firstWord);
                 Console.WriteLine("Your second word is: {0}", secondWord);
@@ -34,14 +36,14 @@ namespace Technical_Test_Application
                 // Check the words exist in the dictionary
                 wordOneInDictionary = DictionaryWordCheck(firstWord, dictionary);
                 wordTwoInDictionary = DictionaryWordCheck(secondWord, dictionary);
-
                 if (wordOneInDictionary == true && wordTwoInDictionary == true)
                 {
-                    // TODO: GENERATE LIST
-                    GenerateList();
 
-                    // TODO: WRITE FILE TO OUTPUT
-                    OutputFile();
+                    // TODO: GENERATE LIST
+                    List<List<string>> mainlist = GenerateLists(firstWord, secondWord, dictionary);
+
+
+                    OutputFile(mainlist);
                 }
                 else
                 {
@@ -73,11 +75,6 @@ namespace Technical_Test_Application
                 string currentPath = System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString();
                 string dictionariesPath = Path.GetFullPath(Path.Combine(currentPath, @"..\..\Dictionaries"));
                 //Console.WriteLine(dictionariesPath);
-
-                // Save user input as upper case. Used to check if the user wants to exit the application...
-                // ...by typing "exit" or "quit".
-                string exitCheck = fileName.ToUpper();
-                ExitCheck(exitCheck);
 
                 // Full path of the file
                 string filePath = Path.Combine(dictionariesPath, fileName);
@@ -160,8 +157,10 @@ namespace Technical_Test_Application
         static bool DictionaryWordCheck(string word, string[] dictionary)
         {
             bool wordPresent = false;
+            // Check every line in dictionary
             foreach(string line in dictionary)
             {
+                // If word exists in dictionary, return true
                 if (word.ToLower() == line.ToLower())
                 {
                     wordPresent = true;
@@ -170,18 +169,110 @@ namespace Technical_Test_Application
             return (wordPresent);
         }
 
-        // Generates a 2D array of paths
-        static void GenerateList()
+        // Generates a 2D list of paths
+        // NOTE: This does not currently function as intended and does not return proper valid paths
+        static List<List<string>> GenerateLists(string wordOne, string wordTwo, string[] dictionary)
         {
-            // TODO: Generate list using the two words given by the user
+            string selectedWord = wordOne.ToLower();
+
+            List<List<string>> validPaths = new List<List<string>>();
+            
+            // For all letters in selected word
+            for (int i = 0; i < selectedWord.Length; i++)
+            {
+
+                char selectedLetter = selectedWord[i];
+                List<string> currentPath = new List<string>();
+                // Add current word to current path
+
+                currentPath.Add(selectedWord);
+
+                // For all words in dictionary
+                for (int j = 0; j <= dictionary.Length - 1; j++)
+                {
+                    string dictionaryWord = dictionary[j].ToLower();
+
+                    // Only check words that are the same length
+                    if (dictionaryWord.Length == selectedWord.Length)
+                    {
+                        // Letter of current dictionary word
+                        char dictionaryWordLetter = dictionaryWord[i];
+
+                        // If selected word and dictionary word are different
+                        if (selectedWord != dictionaryWord)
+                        {
+                            // If both letters are the same and are the same in the desired word
+                            if (selectedLetter == dictionaryWordLetter && selectedLetter == wordTwo[i])
+                            {
+                                // If current word is the end word
+                                if(selectedWord == wordTwo)
+                                {
+                                    validPaths.Add(currentPath);
+                                    Console.WriteLine("VALID PATH FOUND");
+                                }
+                                else
+                                {
+                                    // Add "only one letter different" check
+                                    // Only make dictionary word the selected word
+                                    //.. if only one letter is different
+                                    int sameLetters = 0;
+
+                                    // For every letter in selected word
+                                    for (int k = 0; k < selectedWord.Length; k++)
+                                    {
+                                        // Count the number of letters that are the same
+                                        if (selectedWord[k] == dictionaryWord[k])
+                                        {
+                                            sameLetters++;
+                                        }
+
+                                    }
+                                    // If only one letter is different
+                                    if(sameLetters == 1)
+                                    {
+                                        Console.WriteLine(dictionaryWord);
+                                        // Set selected word to dictionary word
+                                        selectedWord = dictionaryWord;
+                                    }   
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return validPaths;
         }
 
         // Outputs the result to a file.
-        static void OutputFile()
+        static void OutputFile(List<List<string>> wordsList)
         {
-            // TODO: SET FILE DIRECTORY
-            // TODO: ASK USER FOR FILE NAME
-            // TODO: WRITE FILE TO DIRECTORY
+            string userInput;
+            string exitCheck;
+            string currentPath = System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString();
+            string retultsPath = Path.GetFullPath(Path.Combine(currentPath, @"..\..\Results"));
+            
+
+            Console.WriteLine("Please specify the name of the file to write to: ");
+            // Read user input (first word)
+
+            userInput = Console.ReadLine();
+            // Save user input as upper case. Used to check if the user wants to exit the application...
+            // ...by typing "exit" or "quit".
+
+            exitCheck = userInput.ToUpper();
+            ExitCheck(exitCheck);
+            string fileName = userInput;
+            string filePath = Path.Combine(retultsPath, fileName);
+
+            File.WriteAllText(filePath, "");
+            foreach (List<string> list in wordsList)
+            {
+                foreach (string item in list)
+                {
+                    File.AppendAllText(filePath, item + ", ");
+                }
+                File.AppendAllText(filePath, "\n\n");
+            }
         }
 
         // Checks if the user has typed "exit" or "quit"
@@ -206,17 +297,7 @@ namespace Technical_Test_Application
             {
                 Console.WriteLine("This word is not four letters long.");
             }
-
             return (wordValid);
-        }
-
-        static string AskUserForFileName()
-        {
-            Console.WriteLine("Please type the name of the file you wish to use or type quit or exit to quit the application.");
-            Console.WriteLine("Note: The name of the included dictionary is called words-english.txt");
-            string fileName = Console.ReadLine();
-
-            return (fileName);
         }
     }
 }
