@@ -39,11 +39,12 @@ namespace Technical_Test_Application
                 if (wordOneInDictionary == true && wordTwoInDictionary == true)
                 {
 
-                    // TODO: GENERATE LIST
+                    // Generate list of lists of valid paths
                     List<List<string>> mainlist = GenerateLists(firstWord, secondWord, dictionary);
 
+                    // TODO: loop through lists and get shortest one
 
-                    OutputFile(mainlist);
+                    // OutputFile(mainlist);
                 }
                 else
                 {
@@ -173,13 +174,15 @@ namespace Technical_Test_Application
             return (wordPresent);
         }
 
-        // Generates a 2D list of paths
+        // Generates a 2D list of vlid paths from start word to end word
         // NOTE: This does not currently function as intended and does not return proper valid paths
+        //       This code currently adds many of the same word to a list.
         static List<List<string>> GenerateLists(string startWord, string endWord, List<string> dictionary)
         {
             Queue<string> queue = new Queue<string>();
             queue.Enqueue(startWord.ToLower());
 
+            // Current path of words
             List<string> currentPath = new List<string>();
             List<List<string>> validPaths = new List<List<string>>();
             currentPath.Add(startWord);
@@ -199,6 +202,7 @@ namespace Technical_Test_Application
                     queue.Dequeue();
                     visited.Add(currentWord);
 
+                    // Word is same as target end word.
                     if (currentWord == endWord)
                     {
                         Console.WriteLine("Valid Path Found!");
@@ -243,13 +247,9 @@ namespace Technical_Test_Application
                                 queue.Enqueue(dictionaryWord);
                             }
                         }
-
                     }
-
                 }
-
             }
-            
             return validPaths;
         }
 
