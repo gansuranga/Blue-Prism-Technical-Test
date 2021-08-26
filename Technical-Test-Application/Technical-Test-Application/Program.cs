@@ -191,7 +191,7 @@ namespace Technical_Test_Application
             {
                 
                 // For all elements in queue
-                for (int q = 0; q < queue.Count(); ++q)
+                for (int q = 0; q < queue.Count(); q++)
                 {
                     
                     // Get word from the queue, then dequeue it.
@@ -216,7 +216,7 @@ namespace Technical_Test_Application
                     }
 
                     // For all words in dictionary
-                    for (int w = 0; w <= dictionary.Count - 1; ++w)
+                    for (int w = 0; w <= dictionary.Count - 1; w++)
                     {
                         string dictionaryWord = dictionary[w].ToLower();
 
@@ -225,7 +225,7 @@ namespace Technical_Test_Application
                         {
                             int sameLetters = 0;
                             // For all letters in the current word
-                            for (int l = 0; l < currentWord.Length; ++l)
+                            for (int l = 0; l < currentWord.Length; l++)
                             {
                                 // Count the number of letters that are the same
                                 if (currentWord[l] == dictionaryWord[l] && currentWord[l] == endWord[l])
@@ -241,6 +241,7 @@ namespace Technical_Test_Application
                                 //Console.WriteLine(dictionaryWord);
                                 // Push dictionary words
                                 queue.Enqueue(dictionaryWord);
+                                continue;
                             }
                         }
 
@@ -249,88 +250,7 @@ namespace Technical_Test_Application
                 }
 
             }
-
-            //foreach(List<string> path in validPaths)
-            //{
-            //    Console.WriteLine("Valid Path: ");
-            //    foreach(string word in path)
-            //    {
-            //        Console.Write("{0} ", word);
-            //    }
-            //    Console.WriteLine("");
-            //}
-        
-
-
-
-            //string selectedWord = startWord.ToLower();
-            //List<List<string>> validPaths = new List<List<string>>();
-
-            //// For all words in dictionary
-            //for (int j = 0; j <= dictionary.Count - 1; j++)
-            //{
-            //    // New Current Path
-            //    List<string> currentPath = new List<string>();
-            //    // Add current word to current path
-            //    currentPath.Add(selectedWord);
-
-            //    string dictionaryWord = dictionary[j].ToLower();
-
-            //    // For all letters in selected word
-            //    for (int i = 0; i < selectedWord.Length; i++)
-            //    {
-            //        // Only check words that are the same length
-            //        if (dictionaryWord.Length == selectedWord.Length)
-            //        {
-            //            // If selected word and dictionary word are different
-            //            if (selectedWord != dictionaryWord)
-            //            {
-            //                // If both letters are the same and are the same in the desired word
-            //                if (selectedWord[i] == dictionaryWord[i] && selectedWord[i] == endWord[i])
-            //                {
-            //                    // If current word is the end word
-            //                    if (selectedWord == endWord)
-            //                    {
-            //                        validPaths.Add(currentPath);
-            //                        Console.WriteLine("VALID PATH FOUND");
-            //                        dictionary.Remove(dictionaryWord);
-            //                    }
-            //                    else
-            //                    {
-            //                        // Ensure only one letter is different
-            //                        int sameLetters = 0;
-
-            //                        // For every letter in selected word
-            //                        for (int k = 0; k < selectedWord.Length; k++)
-            //                        {
-            //                            // Count the number of letters that are the same
-            //                            if (selectedWord[k] == dictionaryWord[k])
-            //                            {
-            //                                sameLetters++;
-            //                            }
-
-            //                        }
-            //                        // If only one letter is different
-            //                        if (sameLetters == 1)
-            //                        {
-            //                            Console.WriteLine("Current Path:");
-            //                            currentPath.Add(dictionaryWord);
-
-            //                            foreach(string item in currentPath)
-            //                            {
-            //                                Console.Write("{0}, ",  item);
-            //                            }
-            //                            Console.WriteLine("");
-            //                            // Set selected word to dictionary word
-            //                            selectedWord = dictionaryWord;
-
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+            
             return validPaths;
         }
 
