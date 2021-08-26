@@ -241,7 +241,6 @@ namespace Technical_Test_Application
                                 //Console.WriteLine(dictionaryWord);
                                 // Push dictionary words
                                 queue.Enqueue(dictionaryWord);
-                                continue;
                             }
                         }
 
